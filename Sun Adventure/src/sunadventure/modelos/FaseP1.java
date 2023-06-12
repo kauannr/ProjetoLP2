@@ -53,16 +53,8 @@ public class FaseP1 extends JPanel implements ActionListener {
 	private EfeitosSonoros musica;
 	private Chefao chefao;
 	private int vida2 = 0, powerUpVida, powerUpTurbo, powerUpMissel;
-	// CONTADOR
-	private int contadorPontos = 0;
-
-	public void setContadorPontos(int contadorPontos) {
-		this.contadorPontos = contadorPontos;
-	}
-
-	public int getContadorPontos() {
-		return contadorPontos;
-	}
+	private Score pontuacao;
+	
 
 	// Construtor
 	public FaseP1() throws IOException {
@@ -84,6 +76,7 @@ public class FaseP1 extends JPanel implements ActionListener {
 		// Player
 		player = new Player();
 		player.load();
+		
 
 		// Inimigos e PowerUps
 		powerUpVida = 0;
@@ -102,6 +95,9 @@ public class FaseP1 extends JPanel implements ActionListener {
 		timer.start();
 
 		emJogo = true;
+		//Sistema de Score
+				pontuacao = new Score(this);
+				pontuacao.start();
 	}
 
 	public void inicializaExplosoes() {
@@ -229,7 +225,6 @@ public class FaseP1 extends JPanel implements ActionListener {
 					in.setVELOCIDADE(2);
 				}
 			} else {
-				setContadorPontos(contadorPontos + 1);
 				int enemyX, enemyY;
 				enemyX = redufo.get(l).getX();
 				enemyY = redufo.get(l).getY();
@@ -255,7 +250,6 @@ public class FaseP1 extends JPanel implements ActionListener {
 					in2.setVELOCIDADE(2);
 				}
 			} else {
-				setContadorPontos(contadorPontos + 2);
 				int enemyX, enemyY;
 				enemyX = greenfire.get(l1).getX();
 				enemyY = greenfire.get(l1).getY();
@@ -568,6 +562,12 @@ public class FaseP1 extends JPanel implements ActionListener {
 						player.setVisivel(false);
 						tempRedUfo.setVisivel(false);
 						emJogo = false;
+						try {
+				            pontuacao.join(); // Aguarda a thread do score terminar
+				        } catch (InterruptedException e) {
+				            e.printStackTrace();
+				        }
+				        System.out.println("Pontuação: " + pontuacao.getScore());
 					}
 
 				}
@@ -595,6 +595,12 @@ public class FaseP1 extends JPanel implements ActionListener {
 						player.setVisivel(false);
 						tempGreenfire.setVisivel(false);
 						emJogo = false;
+						try {
+				            pontuacao.join(); // Aguarda a thread do score terminar
+				        } catch (InterruptedException e) {
+				            e.printStackTrace();
+				        }
+				        System.out.println("Pontuação: " + pontuacao.getScore());
 					}
 
 				}
@@ -622,6 +628,12 @@ public class FaseP1 extends JPanel implements ActionListener {
 						player.setVisivel(false);
 						tempDeathFish.setVisivel(false);
 						emJogo = false;
+						try {
+				            pontuacao.join(); // Aguarda a thread do score terminar
+				        } catch (InterruptedException e) {
+				            e.printStackTrace();
+				        }
+				        System.out.println("Pontuação: " + pontuacao.getScore());
 					}
 
 				}
@@ -649,6 +661,12 @@ public class FaseP1 extends JPanel implements ActionListener {
 						player.setVisivel(false);
 						tempbigBang.setVisivel(false);
 						emJogo = false;
+						try {
+				            pontuacao.join(); // Aguarda a thread do score terminar
+				        } catch (InterruptedException e) {
+				            e.printStackTrace();
+				        }
+				        System.out.println("Pontuação: " + pontuacao.getScore());
 					}
 
 				}
@@ -664,6 +682,12 @@ public class FaseP1 extends JPanel implements ActionListener {
 			if (player.getVida() < 0) {
 				player.setVisivel(false);
 				emJogo = false;
+				try {
+		            pontuacao.join(); // Aguarda a thread do score terminar
+		        } catch (InterruptedException e) {
+		            e.printStackTrace();
+		        }
+		        System.out.println("Pontuação: " + pontuacao.getScore());
 			}
 
 		}
@@ -878,7 +902,12 @@ public class FaseP1 extends JPanel implements ActionListener {
 							player.setVisivel(false);
 							tempEnemyTiro.setVisivel(false);
 							emJogo = false;
-
+							try {
+					            pontuacao.join(); // Aguarda a thread do score terminar
+					        } catch (InterruptedException e) {
+					            e.printStackTrace();
+					        }
+					        System.out.println("Pontuação: " + pontuacao.getScore());
 						}
 
 					}
@@ -907,6 +936,12 @@ public class FaseP1 extends JPanel implements ActionListener {
 							player.setVisivel(false);
 							tempEnemyTiro.setVisivel(false);
 							emJogo = false;
+							try {
+					            pontuacao.join(); // Aguarda a thread do score terminar
+					        } catch (InterruptedException e) {
+					            e.printStackTrace();
+					        }
+					        System.out.println("Pontuação: " + pontuacao.getScore());
 						}
 
 					}
@@ -929,7 +964,12 @@ public class FaseP1 extends JPanel implements ActionListener {
 					player.setVisivel(false);
 					temptiroBoss.setVisivel(false);
 					emJogo = false;
-
+					try {
+			            pontuacao.join(); // Aguarda a thread do score terminar
+			        } catch (InterruptedException e) {
+			            e.printStackTrace();
+			        }
+			        System.out.println("Pontuação: " + pontuacao.getScore());
 				}
 
 			}
@@ -1201,9 +1241,8 @@ public class FaseP1 extends JPanel implements ActionListener {
 			graficos.drawString(" " + chefao.getVida(), 505, 100);
 
 		} else {
-			System.out.println("--- GAME OVER ---");
-			System.out.println("Pontuação: " + getContadorPontos());
-			System.exit(0);
+	        ImageIcon fimJogo = new ImageIcon("res\\fimdejogo.png");
+			graficos.drawImage(fimJogo.getImage(), 0, 0, null);
 		}
 
 		g.dispose();
