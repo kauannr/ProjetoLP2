@@ -44,9 +44,15 @@ public class GreenFire extends Nave implements ActionListener {
 		if (x < LARGURA) {
 			if (tiro == true) {
 				tiroInimigo();
+				SomTiro();
 			}
 		}
 
+	}
+	
+	public void SomTiro() {
+		EfeitosSonoros a = new EfeitosSonoros();
+		a.tocarTiro();
 	}
 
 	public void explosoes() {
