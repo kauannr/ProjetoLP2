@@ -11,6 +11,8 @@ import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
 
+import sunadventure.songs.EfeitosSonoros;
+
 public class GreenFire extends Nave implements ActionListener {
 
 	private Image Imagem;
@@ -44,7 +46,7 @@ public class GreenFire extends Nave implements ActionListener {
 		if (x < LARGURA) {
 			if (tiro == true) {
 				tiroInimigo();
-				SomTiro();
+				SomTiro(); 
 			}
 		}
 
